@@ -6,7 +6,6 @@ import com.semicolon.ediary.repositories.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -30,7 +29,12 @@ public class EntryServiceImpl implements EntryService {
         return saveEntry(newEntry);
     }
 
-    public Entry updateEntry(Entry updatedEntry) throws Exception {
+    @Override
+    public Entry saveEntryBeforeAddingToDiary(Entry entry) {
+        return saveEntry(entry);
+    }
+
+    /*public Entry updateEntry(Entry updatedEntry) throws Exception {
         Optional<Entry> foundEntry = entryRepository.findById(updatedEntry.getId());
         if(foundEntry.isPresent()){
             foundEntry.get().setTitle(updatedEntry.getTitle());
@@ -40,7 +44,7 @@ public class EntryServiceImpl implements EntryService {
         else {
             throw new Exception("Not found");
         }
-    }
+    }*/
 
     private Entry saveEntry(Entry entry) {
         return entryRepository.save(entry);

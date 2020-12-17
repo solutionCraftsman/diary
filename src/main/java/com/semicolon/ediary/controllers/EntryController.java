@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/businessOwner/")
+@RequestMapping("/entry/")
 public class EntryController {
     @Autowired
     //@Qualifier("defaultEntryServiceToBeUsed")
@@ -34,7 +35,10 @@ public class EntryController {
         //return "successful";
         //return new ResponseEntity<>(entryService.saveNewEntry(newEntry), HttpStatus.CREATED);
         //entryService.saveNewEntry(newEntry);
-        entryService.saveNewEntry(createEntryRequestModel);
-        return new ResponseEntity<>(new ApiResponse(true, "New Entry Created"), HttpStatus.CREATED);
+        /*if (*/ entryService.saveNewEntry(createEntryRequestModel); /* != null) {*/
+            return new ResponseEntity<>(new ApiResponse(true, "New Entry Created"), HttpStatus.CREATED);
+        /*} else {
+            return new ResponseEntity<>(new ApiResponse(false, "Entry Creation Failed"), HttpStatus.NOT_IMPLEMENTED);
+        }*/
     }
 }
