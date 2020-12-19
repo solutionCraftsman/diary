@@ -21,7 +21,7 @@ public class DiaryServiceImpl implements DiaryService {
     Logger logger = LoggerFactory.getLogger(DiaryServiceImpl.class);
 
     @Autowired
-   private DiaryRepository diaryRepository;
+    private DiaryRepository diaryRepository;
 
     @Autowired
     private EntryService entryService;
@@ -40,14 +40,13 @@ public class DiaryServiceImpl implements DiaryService {
         logger.warn(diaryId);
         Optional<Diary> entryDiary = diaryRepository.findDiaryById(diaryId);
         logger.warn(entryDiary.toString());
-        if(entryDiary.isPresent()) {
+        if (entryDiary.isPresent()) {
             newEntry.setTitle(createEntryRequestModel.getTitle());
             newEntry.setBody(createEntryRequestModel.getBody());
             newEntry.setLocalDateTime(LocalDateTime.now());
             entryDiary.get().getEntries().add(entryService.saveEntryBeforeAddingToDiary(newEntry));
             return saveEntry(entryDiary.get());
-        }
-        else {
+        } else {
             throw new Exception("Diary Not Found");
         }
     }
