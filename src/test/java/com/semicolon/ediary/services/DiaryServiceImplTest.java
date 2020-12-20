@@ -24,7 +24,7 @@ class DiaryServiceImplTest {
     private DiaryRepository diaryRepository;
 
     @Mock
-    private EntryRepository entryRepository;
+    private EntryService entryService;
 
     @InjectMocks
     private DiaryServiceImpl diaryService;
@@ -57,7 +57,7 @@ class DiaryServiceImplTest {
 
         when(diaryRepository.save(any())).thenReturn(diary);
         when(diaryRepository.findDiaryById("ayodele")).thenReturn(java.util.Optional.of(diary));
-        when(entryRepository.save(any())).thenReturn(entry);
+        when(entryService.saveEntryBeforeAddingToDiary(any())).thenReturn(entry);
 
         //when
         Diary savedDiary = diaryService.addNewEntry(cERM, "ayodele");

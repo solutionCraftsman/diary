@@ -44,6 +44,7 @@ public class DiaryServiceImpl implements DiaryService {
             newEntry.setTitle(createEntryRequestModel.getTitle());
             newEntry.setBody(createEntryRequestModel.getBody());
             newEntry.setLocalDateTime(LocalDateTime.now());
+            logger.warn(entryService.toString());
             entryDiary.get().getEntries().add(entryService.saveEntryBeforeAddingToDiary(newEntry));
             return saveEntry(entryDiary.get());
         } else {
