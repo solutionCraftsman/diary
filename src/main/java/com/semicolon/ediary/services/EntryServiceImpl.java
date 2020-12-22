@@ -22,16 +22,11 @@ public class EntryServiceImpl implements EntryService {
     }*/
 
     @Override
-    public Entry saveNewEntry(CreateEntryRequestModel createEntryRequestModel) {
+    public Entry createNewEntry(CreateEntryRequestModel createEntryRequestModel) {
         Entry newEntry = new Entry();
         newEntry.setTitle(createEntryRequestModel.getTitle());
         newEntry.setBody(createEntryRequestModel.getBody());
         return saveEntry(newEntry);
-    }
-
-    @Override
-    public Entry saveEntryBeforeAddingToDiary(Entry entry) {
-        return saveEntry(entry);
     }
 
     /*public Entry updateEntry(Entry updatedEntry) throws Exception {

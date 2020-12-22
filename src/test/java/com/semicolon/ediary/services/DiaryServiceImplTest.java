@@ -4,7 +4,6 @@ import com.semicolon.ediary.dtos.CreateEntryRequestModel;
 import com.semicolon.ediary.models.Diary;
 import com.semicolon.ediary.models.Entry;
 import com.semicolon.ediary.repositories.DiaryRepository;
-import com.semicolon.ediary.repositories.EntryRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,13 +56,16 @@ class DiaryServiceImplTest {
 
         when(diaryRepository.save(any())).thenReturn(diary);
         when(diaryRepository.findDiaryById("ayodele")).thenReturn(java.util.Optional.of(diary));
-        when(entryService.saveEntryBeforeAddingToDiary(any())).thenReturn(entry);
+        when(entryService.createNewEntry(any())).thenReturn(entry);
 
         //when
-        Diary savedDiary = diaryService.addNewEntry(cERM, "ayodele");
+        //Diary savedDiary = diaryService.addNewEntry(cERM, "ayodele");
+        //Diary savedDiary = diaryService.addNewEntry(cERM, "ayodele");
+        Entry savedEntry = diaryService.addNewEntry(cERM, "ayodele");
 
-        assertEquals(diary, savedDiary);
-        assertEquals(entry, savedDiary.getEntries().get(0));
+        assertEquals(entry, savedEntry);
+        //assertEquals(diary, savedDiary);
+        //assertEquals(entry, savedDiary.getEntries().get(0));
     }
 }
 

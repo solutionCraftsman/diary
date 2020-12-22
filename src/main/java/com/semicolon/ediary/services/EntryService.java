@@ -7,6 +7,5 @@ import org.springframework.stereotype.Service;
 
 public interface EntryService {
     //Entry saveNewEntry(Entry entry);
-    Entry saveNewEntry(CreateEntryRequestModel createEntryRequestModel);
-    Entry saveEntryBeforeAddingToDiary(Entry entry);
+    Entry createNewEntry(CreateEntryRequestModel createEntryRequestModel);
 }

@@ -47,7 +47,7 @@ class EntryServiceImplTest {
 
         //when
         when(entryRepository.save(any())).thenReturn(entry);
-        Entry savedEntry = entryService.saveNewEntry(cERM);
+        Entry savedEntry = entryService.createNewEntry(cERM);
 
         System.out.println(cERM);
         System.out.println(entry);
