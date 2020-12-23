@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface DiaryService {
     Diary createNewDiary(CreateDiaryRequestModel createDiaryRequestModel);
-    Entry addNewEntry(CreateEntryRequestModel createEntryRequestModel, String diaryID) throws Exception;
+    Entry createNewEntry(CreateEntryRequestModel createEntryRequestModel, String diaryID) throws Exception;
     Optional<Diary> findDiaryById(String id);
 }

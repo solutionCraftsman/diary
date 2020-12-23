@@ -33,7 +33,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Entry addNewEntry(CreateEntryRequestModel createEntryRequestModel, String diaryID) throws Exception {
+    public Entry createNewEntry(CreateEntryRequestModel createEntryRequestModel, String diaryID) throws Exception {
         logger.warn(diaryID);
         Optional<Diary> entryDiary = diaryRepository.findDiaryById(diaryID);
         logger.warn(entryDiary.toString());

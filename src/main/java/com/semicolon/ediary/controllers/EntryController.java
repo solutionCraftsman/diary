@@ -24,7 +24,7 @@ public class EntryController {
     //public String saveNewEntry(@RequestBody Entry newEntry) {
     //public ResponseEntity<?> saveNewEntry(@RequestBody @Valid (then e.g. @Email) Entry newEntry) {
     //public ResponseEntity<?> saveNewEntry(@RequestBody Entry newEntry) {
-    public ResponseEntity<?> saveNewEntry(@RequestBody CreateEntryRequestModel createEntryRequestModel) {
+    public ResponseEntity<?> createNewEntry(@RequestBody CreateEntryRequestModel createEntryRequestModel) {
         //entryService.saveNewEntry(newEntry);
         //return "successful";
         //return new ResponseEntity<>(entryService.saveNewEntry(newEntry), HttpStatus.CREATED);

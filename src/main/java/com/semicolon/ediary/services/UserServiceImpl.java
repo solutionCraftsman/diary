@@ -7,14 +7,18 @@ import com.semicolon.ediary.models.Diary;
 import com.semicolon.ediary.models.Entry;
 import com.semicolon.ediary.models.User;
 import com.semicolon.ediary.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     UserRepository userRepository;
@@ -41,40 +45,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Diary addNewDiary(CreateDiaryRequestModel createDiaryRequestModel, String userID) throws Exception {
-        Optional<User> foundUser = findUserById(userID);
-        if(foundUser.isPresent()) {
+    public Diary createNewDiary(CreateDiaryRequestModel createDiaryRequestModel, String userID) throws Exception {
+        User foundUser = findUserById(userID);
+        try {
             Diary savedDiary = diaryService.createNewDiary(createDiaryRequestModel);
-            foundUser.get().getDiaries().add(savedDiary);
-            saveUser(foundUser.get());
+            foundUser.getDiaries().add(savedDiary);
+            saveUser(foundUser);
             return savedDiary;
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    private User findUserById(String id) throws Exception {
+        Optional<User> foundUser = userRepository.findUserById(id);
+        if(foundUser.isPresent()) {
+            return foundUser.get();
         } else {
             throw new Exception("User not found");
         }
     }
 
-    private Optional<User> findUserById(String id) {
-        return userRepository.findUserById(id);
-    }
-
     @Override
-    public Entry addNewDiaryEntry(CreateEntryRequestModel createEntryRequestModel, String userID, String diaryID) throws Exception {
+    public Entry createNewDiaryEntry(CreateEntryRequestModel createEntryRequestModel, String userID, String diaryID) throws Exception {
         //find user
-        Optional<User> foundUser = findUserById(userID);
+        User foundUser = findUserById(userID);
         //confirm diary belongs to user
-        if(foundUser.isPresent()) {
-            Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
-            if(foundDiary.isPresent()) {
-                if(foundUser.get().getDiaries().contains(foundDiary.get())) {
-                    return diaryService.addNewEntry(createEntryRequestModel, diaryID);
-                } else {
-                    throw new Exception("Diary not found to belong to this user");
-                }
+        Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
+        if(foundDiary.isPresent()) {
+            if(foundUser.getDiaries().contains(foundDiary.get())) {
+                return diaryService.createNewEntry(createEntryRequestModel, diaryID);
             } else {
-                throw new Exception("Diary not found");
+                throw new Exception("Diary not found to belong to this user");
             }
         } else {
-            throw new Exception("User not found");
+            throw new Exception("Diary not found");
         }
     }
 
@@ -89,4 +94,39 @@ public class UserServiceImpl implements UserService {
     private boolean emailExists(String email) {
         return userRepository.findUserByEmail(email).isPresent();
     }
+
+    @Override
+    public List<Diary> getAllDiaries(String userID) throws Exception {
+        User foundUser = findUserById(userID);
+        logger.warn(foundUser.toString());
+        return foundUser.getDiaries();
+    }
+
+    @Override
+    public Diary getDiary(String userID, String diaryID) {
+        try {
+            User foundUser = findUserById(userID);
+            Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
+            if(foundDiary.isPresent()) {
+                if(foundUser.getDiaries().contains(foundDiary.get())) {
+                    return foundDiary.get();
+                }
+                else {
+                    throw new Exception("Diary does not belong to this user");
+                }
+            }
+            else {
+                throw new Exception("Diary not found");
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
+
+
+
+
+
+
+

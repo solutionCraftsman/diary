@@ -61,7 +61,7 @@ class DiaryServiceImplTest {
         //when
         //Diary savedDiary = diaryService.addNewEntry(cERM, "ayodele");
         //Diary savedDiary = diaryService.addNewEntry(cERM, "ayodele");
-        Entry savedEntry = diaryService.addNewEntry(cERM, "ayodele");
+        Entry savedEntry = diaryService.createNewEntry(cERM, "ayodele");
 
         assertEquals(entry, savedEntry);
         //assertEquals(diary, savedDiary);

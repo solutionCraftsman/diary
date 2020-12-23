@@ -26,11 +26,11 @@ public class DiaryController {
         return new ResponseEntity<>(new ApiResponse(true, "New Diary Created"), HttpStatus.CREATED);
     }
 
-    @PostMapping("{diaryId}/addNewEntry")
+    @PostMapping("{diaryID}/addNewEntry")
     //public ResponseEntity<?> addNewEntry(@RequestBody CreateEntryRequestModel createEntryRequestModel, @PathVariable String diaryId) {
-    public ResponseEntity<?> addNewEntry(@RequestBody CreateEntryRequestModel createEntryRequestModel, @PathVariable String diaryID) {
+    public ResponseEntity<?> createNewEntry(@RequestBody CreateEntryRequestModel createEntryRequestModel, @PathVariable String diaryID) {
         try {
-            diaryService.addNewEntry(createEntryRequestModel, diaryID);
+            diaryService.createNewEntry(createEntryRequestModel, diaryID);
             return new ResponseEntity<>(new ApiResponse(true, "Entry Added to Diary"), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);

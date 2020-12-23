@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping("{userID}/new-diary")
     public ResponseEntity<?> createNewDiary(@RequestBody CreateDiaryRequestModel createDiaryRequestModel, @PathVariable String userID) {
         try {
-            userService.addNewDiary(createDiaryRequestModel, userID);
+            userService.createNewDiary(createDiaryRequestModel, userID);
             return new ResponseEntity<>(new ApiResponse(true, "Diary created Successfully"), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
@@ -40,11 +40,28 @@ public class UserController {
     @PostMapping("{userID}/{diaryID}/new-diary-entry")
     public ResponseEntity<?> createNewDiaryEntry(@RequestBody CreateEntryRequestModel createEntryRequestModel, @PathVariable String userID, @PathVariable String diaryID) {
         try {
-            userService.addNewDiaryEntry(createEntryRequestModel, userID, diaryID);
+            userService.createNewDiaryEntry(createEntryRequestModel, userID, diaryID);
             return new ResponseEntity<>(new ApiResponse(true, "Diary created Successfully"), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
+    @GetMapping("{userID}/all-diaries")
+    public ResponseEntity<?> getAllDiaries(@PathVariable String userID) {
+        try {
+            return new ResponseEntity<>(userService.getAllDiaries(userID), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("{userID}/diary/{diaryID}")
+    public ResponseEntity<?> getDiary(@PathVariable String userID, @PathVariable String diaryID) {
+        try {
+            return new ResponseEntity<>(userService.getDiary(userID, diaryID), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
 }

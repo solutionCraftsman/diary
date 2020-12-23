@@ -7,8 +7,16 @@ import com.semicolon.ediary.models.Diary;
 import com.semicolon.ediary.models.Entry;
 import com.semicolon.ediary.models.User;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public interface UserService {
     User createNewUser(CreateUserRequestModel createUserRequestModel) throws Exception;
-    Diary addNewDiary(CreateDiaryRequestModel createDiaryRequestModel, String userID) throws Exception;
-    Entry addNewDiaryEntry(CreateEntryRequestModel createEntryRequestModel, String userID, String diaryID) throws Exception;
+    Diary createNewDiary(CreateDiaryRequestModel createDiaryRequestModel, String userID) throws Exception;
+    Entry createNewDiaryEntry(CreateEntryRequestModel createEntryRequestModel, String userID, String diaryID) throws Exception;
+
+    List<Diary> getAllDiaries(String userID) throws Exception;
+
+    Diary getDiary(String userID, String diaryID);
 }
