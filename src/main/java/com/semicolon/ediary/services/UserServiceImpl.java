@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createNewUser(CreateUserRequestModel createUserRequestModel) throws Exception {
-        if(usernameExists(createUserRequestModel.getUsername()) ||
-            emailExists(createUserRequestModel.getEmail())) {
+        if (usernameExists(createUserRequestModel.getUsername()) ||
+                emailExists(createUserRequestModel.getEmail())) {
             throw new Exception("username or email already exists");
         }
 
@@ -47,19 +47,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Diary createNewDiary(CreateDiaryRequestModel createDiaryRequestModel, String userID) throws Exception {
         User foundUser = findUserById(userID);
-        try {
-            Diary savedDiary = diaryService.createNewDiary(createDiaryRequestModel);
-            foundUser.getDiaries().add(savedDiary);
-            saveUser(foundUser);
-            return savedDiary;
-        } catch (Exception e){
-            return null;
-        }
+
+        Diary savedDiary = diaryService.createNewDiary(createDiaryRequestModel);
+        foundUser.getDiaries().add(savedDiary);
+        saveUser(foundUser);
+        return savedDiary;
     }
 
     private User findUserById(String id) throws Exception {
         Optional<User> foundUser = userRepository.findUserById(id);
-        if(foundUser.isPresent()) {
+        if (foundUser.isPresent()) {
             return foundUser.get();
         } else {
             throw new Exception("User not found");
@@ -72,8 +69,8 @@ public class UserServiceImpl implements UserService {
         User foundUser = findUserById(userID);
         //confirm diary belongs to user
         Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
-        if(foundDiary.isPresent()) {
-            if(foundUser.getDiaries().contains(foundDiary.get())) {
+        if (foundDiary.isPresent()) {
+            if (foundUser.getDiaries().contains(foundDiary.get())) {
                 return diaryService.createNewEntry(createEntryRequestModel, diaryID);
             } else {
                 throw new Exception("Diary not found to belong to this user");
@@ -103,24 +100,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Diary getDiary(String userID, String diaryID) {
-        try {
-            User foundUser = findUserById(userID);
-            Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
-            if(foundDiary.isPresent()) {
-                if(foundUser.getDiaries().contains(foundDiary.get())) {
-                    return foundDiary.get();
-                }
-                else {
-                    throw new Exception("Diary does not belong to this user");
-                }
+    public Diary getDiary(String userID, String diaryID) throws Exception {
+        User foundUser = findUserById(userID);
+        Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
+        if (foundDiary.isPresent()) {
+            if (foundUser.getDiaries().contains(foundDiary.get())) {
+                return foundDiary.get();
+            } else {
+                throw new Exception("Diary does not belong to this user");
             }
-            else {
-                throw new Exception("Diary not found");
-            }
-        } catch (Exception e) {
-            return null;
+        } else {
+            throw new Exception("Diary not found");
         }
+    }
+
+    @Override
+    public List<Entry> getAllEntries(String userID, String diaryID) throws Exception {
+        getDiary(userID, diaryID);
+        return diaryService.getAllEntries(diaryID);
     }
 }
 

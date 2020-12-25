@@ -18,5 +18,7 @@ public interface UserService {
 
     List<Diary> getAllDiaries(String userID) throws Exception;
 
-    Diary getDiary(String userID, String diaryID);
+    Diary getDiary(String userID, String diaryID) throws Exception;
+
+    List<Entry> getAllEntries(String userID, String diaryID) throws Exception;
 }
