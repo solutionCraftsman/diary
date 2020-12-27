@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -48,8 +49,35 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Optional<Diary> findDiaryById(String id) {
-        return diaryRepository.findDiaryById(id);
+    public Diary findDiaryById(String id) throws Exception {
+        Optional<Diary> foundDiary = diaryRepository.findDiaryById(id);
+        if(foundDiary.isPresent()) {
+            return foundDiary.get();
+        } else {
+            throw new Exception("Diary not found");
+        }
+    }
+
+    @Override
+    public List<Entry> getAllEntries(String diaryID) throws Exception {
+        Diary foundDiary = findDiaryById(diaryID);
+        return foundDiary.getEntries();
+    }
+
+    public Entry getEntry(String diaryID, String entryID) throws Exception {
+        Diary foundDiary = findDiaryById(diaryID);
+        Optional<Entry> foundEntry = entryService.findEntryById(entryID);
+        if(foundEntry.isPresent()) {
+            if(foundDiary.getEntries().contains(foundEntry.get())) {
+                return foundEntry.get();
+            }
+            else {
+                throw new Exception("Entry does not belong to this diary");
+            }
+        }
+        else {
+            throw new Exception("Entry not found");
+        }
     }
 
     /*private Diary saveEntry(Diary entryDiary) {

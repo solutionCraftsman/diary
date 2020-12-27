@@ -74,4 +74,14 @@ public class UserController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("{userID}/diary/{diaryID}/entry/{entryID}")
+    public ResponseEntity<?> getEntry(@PathVariable String userID, @PathVariable String diaryID, @PathVariable String entryID) {
+        try {
+            return new ResponseEntity<>(userService.getEntry(userID, diaryID, entryID), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
 }
+

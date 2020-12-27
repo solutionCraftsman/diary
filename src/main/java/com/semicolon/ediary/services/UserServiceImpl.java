@@ -68,15 +68,11 @@ public class UserServiceImpl implements UserService {
         //find user
         User foundUser = findUserById(userID);
         //confirm diary belongs to user
-        Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
-        if (foundDiary.isPresent()) {
-            if (foundUser.getDiaries().contains(foundDiary.get())) {
-                return diaryService.createNewEntry(createEntryRequestModel, diaryID);
-            } else {
-                throw new Exception("Diary not found to belong to this user");
-            }
+        Diary foundDiary = diaryService.findDiaryById(diaryID);
+        if (foundUser.getDiaries().contains(foundDiary)) {
+            return diaryService.createNewEntry(createEntryRequestModel, diaryID);
         } else {
-            throw new Exception("Diary not found");
+            throw new Exception("Diary not found to belong to this user");
         }
     }
 
@@ -102,15 +98,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Diary getDiary(String userID, String diaryID) throws Exception {
         User foundUser = findUserById(userID);
-        Optional<Diary> foundDiary = diaryService.findDiaryById(diaryID);
-        if (foundDiary.isPresent()) {
-            if (foundUser.getDiaries().contains(foundDiary.get())) {
-                return foundDiary.get();
-            } else {
-                throw new Exception("Diary does not belong to this user");
-            }
+        Diary foundDiary = diaryService.findDiaryById(diaryID);
+        if (foundUser.getDiaries().contains(foundDiary)) {
+            return foundDiary;
         } else {
-            throw new Exception("Diary not found");
+            throw new Exception("Diary does not belong to this user");
         }
     }
 
@@ -118,6 +110,12 @@ public class UserServiceImpl implements UserService {
     public List<Entry> getAllEntries(String userID, String diaryID) throws Exception {
         getDiary(userID, diaryID);
         return diaryService.getAllEntries(diaryID);
+    }
+
+    @Override
+    public Entry getEntry(String userID, String diaryID, String entryID) throws Exception {
+        getDiary(userID, diaryID);
+        return diaryService.getEntry(diaryID, entryID);
     }
 }
 

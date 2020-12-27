@@ -11,7 +11,9 @@ import java.util.Optional;
 public interface DiaryService {
     Diary createNewDiary(CreateDiaryRequestModel createDiaryRequestModel);
     Entry createNewEntry(CreateEntryRequestModel createEntryRequestModel, String diaryID) throws Exception;
-    Optional<Diary> findDiaryById(String id);
+    Diary findDiaryById(String id) throws Exception;
 
-    List<Entry> getAllEntries(String diaryID);
+    List<Entry> getAllEntries(String diaryID) throws Exception;
+
+    Entry getEntry(String diaryID, String entryID) throws Exception;
 }
