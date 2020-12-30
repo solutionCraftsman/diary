@@ -10,6 +10,6 @@ public class HomeController {
     //@GetMapping("/")
     @RequestMapping("/")
     public String index() {
-        return "Hallo! Greetings from Spring Boot!";
+        return "<h1>Hallo! Greetings from Spring Boot!</h1>";
     }
 }
