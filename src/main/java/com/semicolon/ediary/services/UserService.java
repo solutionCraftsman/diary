@@ -8,6 +8,7 @@ import com.semicolon.ediary.models.Entry;
 import com.semicolon.ediary.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     User createNewUser(CreateUserRequestModel createUserRequestModel) throws Exception;
@@ -22,5 +23,5 @@ public interface UserService {
 
     Entry getEntry(String userID, String diaryID, String entryID) throws Exception;
 
-    List<User> getAllUsers();
+    Optional<List<User>> getAllUsers();
 }

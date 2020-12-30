@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/user/")
 public class UserController {
@@ -49,11 +51,7 @@ public class UserController {
 
     @GetMapping("all-users")
     public ResponseEntity<?> getAllUsers() {
-        try {
-            return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(userService.getAllUsers().orElse(Collections.emptyList()), HttpStatus.OK);
     }
 
     @GetMapping("{userID}/all-diaries")
