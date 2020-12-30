@@ -117,6 +117,11 @@ public class UserServiceImpl implements UserService {
         getDiary(userID, diaryID);
         return diaryService.getEntry(diaryID, entryID);
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }
 
 

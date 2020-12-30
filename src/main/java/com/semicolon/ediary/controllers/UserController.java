@@ -47,6 +47,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("all-users")
+    public ResponseEntity<?> getAllUsers() {
+        try {
+            return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("{userID}/all-diaries")
     public ResponseEntity<?> getAllDiaries(@PathVariable String userID) {
         try {
