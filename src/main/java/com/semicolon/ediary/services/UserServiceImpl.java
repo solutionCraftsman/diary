@@ -119,8 +119,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<List<User>> getAllUsers() {
-        return Optional.of(userRepository.findAll());
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
 

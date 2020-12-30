@@ -23,5 +23,5 @@ public interface UserService {
 
     Entry getEntry(String userID, String diaryID, String entryID) throws Exception;
 
-    Optional<List<User>> getAllUsers();
+    List<User> getAllUsers();
 }

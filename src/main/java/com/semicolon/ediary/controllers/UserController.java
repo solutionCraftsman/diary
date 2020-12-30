@@ -51,7 +51,7 @@ public class UserController {
 
     @GetMapping("all-users")
     public ResponseEntity<?> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers().orElse(Collections.emptyList()), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("{userID}/all-diaries")
