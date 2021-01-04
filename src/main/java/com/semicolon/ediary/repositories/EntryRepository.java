@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface EntryRepository extends MongoRepository<Entry, String> {
-    Optional<Entry> findEntryByTitle(String title);
+    //Optional<Entry> findEntryByTitle(String title);
 
     Optional <Entry> findEntryById(String id);
 }

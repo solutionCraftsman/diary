@@ -19,11 +19,12 @@ class DiaryRepositoryTest {
     @Autowired
     private DiaryRepository diaryRepository;
 
-    private Diary diary;
+    //given
+    private Diary diary = new Diary();;
 
     @BeforeEach
     void setUp() {
-        diary = new Diary();
+        //..given
         diary.setNameOfOwner("ayo");
         //diary.setLocalDateTime(LocalDateTime.now());
     }
@@ -44,7 +45,7 @@ class DiaryRepositoryTest {
     }
 
     @Test
-    void testFindDiaryById() {
+    void testFindDiaryByID() {
         //when
         Diary savedDiary = diaryRepository.save(diary);
         Optional<Diary> foundDiary = diaryRepository.findDiaryById(savedDiary.getId());
